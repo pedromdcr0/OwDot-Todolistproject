@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>o dot</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body>
+    <header>
+        <a href="/" class="header_home">Ow Dot</a>
+        <a href="/" class="header_login">Sign Up/Sign Out</a>
+
+    </header>
+    <div class="content">
+        <div class="content_1">
+            <a href="#" class="div_anchor">
+                <div class="div_clicavel_card">
+                    <p class="card_content_title">a</p>
+                    <p class="card_content_description">b</p>
+                </div>
+            </a>
+        </div>
+        <div class="content_2">
+            <div class="content_2_box">
+                <h1 class="content_2_title">Login</h1>
+                <form action="/authenticate" method="POST">
+                    <div class="content_2_form_container">
+                        <div class="username">
+                            <p class="content_2_username">Username:</p>
+                            <input type="text" class="content_2_username_input" name="user">
+                        </div>
+                        <div class="password">
+                            <p class="content_2_password">Password:</p>
+                            <input type="password" class="content_2_password_input" name="password">
+                        </div>
+                        <button class="content_2_submit">Submit</button>
+                    </div>
+                </form>
+                <div class="content_2_forsin_container">
+                    <a href="/register" class="content_2_forsin">Sign up</a>
+                    <a href="#" class="content_2_forsin">Forgot password?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
