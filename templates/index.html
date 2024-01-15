@@ -6,19 +6,26 @@
     <link rel="stylesheet" href="../static/css/index.css">
 </head>
 <body>
-    <header>
+    <!--<header>
         <a href="/" class="header_home">Ow Dot</a>
         <a href="/" class="header_login">Sign Up/Sign Out</a>
 
     </header>
+    -->
     <div class="content">
         <div class="content_1">
-            <a href="#" class="div_anchor">
+            <!-- <a href="#" class="div_anchor">
                 <div class="div_clicavel_card">
                     <p class="card_content_title">a</p>
                     <p class="card_content_description">b</p>
                 </div>
             </a>
+            # THIS IS THE CODE FOR THE TAGS, USE IT LATER.
+            -->
+            <div class="content_1_landing">
+                <h1 class="content_1_title">ow dot.</h1>
+                <p class="content_1_subtitle">The to-do list that you need for your daily organization.</p>
+            </div>
         </div>
         <div class="content_2">
             <div class="content_2_box">
@@ -33,15 +40,20 @@
                             <p class="content_2_password">Password:</p>
                             <input type="password" class="content_2_password_input" name="password">
                         </div>
-                        <button class="content_2_submit">Submit</button>
+                        <button class="content_2_submit">Login</button>
                     </div>
                 </form>
                 <div class="content_2_forsin_container">
-                    <a href="/register" class="content_2_forsin">Sign up</a>
+                    <a href="{{ url_for('register') }}" class="content_2_forsin">Sign up</a>
                     <a href="#" class="content_2_forsin">Forgot password?</a>
                 </div>
             </div>
         </div>
     </div>
+    <footer class="footer">
+        <div>
+            <p class="footer_title">ow dot.</p>
+        </div>
+    </footer>
 </body>
 </html>

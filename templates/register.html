@@ -3,45 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>o dot</title>
-    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/register.css">
 </head>
 <body>
-    <header>
+    <!--<header>
         <a href="/" class="header_home">Ow Dot</a>
         <a href="/" class="header_login">Sign Up/Sign Out</a>
-
     </header>
+    -->
     <div class="content">
         <div class="content_1">
-            <a href="#" class="div_anchor">
+            <!-- <a href="#" class="div_anchor">
                 <div class="div_clicavel_card">
                     <p class="card_content_title">a</p>
                     <p class="card_content_description">b</p>
                 </div>
             </a>
+            # THIS IS THE CODE FOR THE TAGS, USE IT LATER.
+            -->
+            <div class="content_1_landing">
+                <h1 class="content_1_title">Create an account</h1>
+                <h2 class="content_1_subtitle">What you can do with <u>ow dot.</u>?</h2>
+                <ul class="content_1_list">
+                    <li>Create tasks</li>
+                    <li>Mark tasks as complete</li>
+                    <li>See graphs</li>
+                </ul>
+
+            </div>
         </div>
         <div class="content_2">
             <div class="content_2_box">
-                <h1 class="content_2_title">Login</h1>
-                <form action="/authenticate" method="POST">
+                <h1 class="content_2_title">Register</h1>
+                <form action="/register" method="POST">
                     <div class="content_2_form_container">
                         <div class="username">
                             <p class="content_2_username">Username:</p>
-                            <input type="text" class="content_2_username_input" name="user">
+                            <input type="text" class="content_2_username_input" name="username" required>
+                        </div>
+                        <div class="email">
+                            <p class="content_2_username">Email:</p>
+                            <input type="text" class="content_2_username_input" name="email" required>
                         </div>
                         <div class="password">
                             <p class="content_2_password">Password:</p>
-                            <input type="password" class="content_2_password_input" name="password">
+                            <input type="password" class="content_2_password_input" name="password" required>
                         </div>
-                        <button class="content_2_submit">Submit</button>
+                        <div class="requirements_pusher">
+                            <div class="pusher">Password:</div>
+                            <div class="requirements">
+                                <p class="content_2_password_requirements">Minimum 8 characters</p>
+                                <p class="content_2_password_requirements">Must have letters, numbers and symbols </p>
+                            </div>
+                        </div>
+                        <div class="password">
+                            <p class="content_2_password">Confirm password:</p>
+                            <input type="password" class="content_2_password_input" name="conf_password" required>
+                        </div>
+                        <button class="content_2_submit">Create Account</button>
                     </div>
                 </form>
-                <div class="content_2_forsin_container">
-                    <a href="/register" class="content_2_forsin">Sign up</a>
-                    <a href="#" class="content_2_forsin">Forgot password?</a>
-                </div>
             </div>
         </div>
     </div>
+    <footer class="footer">
+        <div>
+            <p class="footer_title">ow dot.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleTooltip(element) {
+          element.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>

@@ -66,7 +66,15 @@ header {
 .content_1_subtitle {
     margin: 0px 25px;
     margin-top: 50px;
+    font-weight: 700;
     font-size: 25px;
+}
+
+.content_1_list {
+    list-style-type: circle;
+    font-size: 20px;
+    font-weight: 300;
+    margin-left: 0.3vw;
 }
 
 .content_2 {
@@ -105,8 +113,19 @@ header {
     font-size: 18px;
 }
 
+.email {
+    display:flex;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    font-weight: 300;
+    font-size: 18px;
+    margin: 18px 0 18px 0;
+}
+
 .content_2_username {
     width: 30%;
+    margin:0;
 }
 
 .content_2_username_input {
@@ -124,10 +143,32 @@ header {
 
 .content_2_password {
     width: 30%;
+    margin: 0;
 }
 
 .content_2_password_input {
     height: 50%;
+}
+
+.content_2_password_requirements {
+    color: lightgray;
+    width:100%;
+    text-align: left;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.requirements_pusher {
+    display:flex;
+    justify-content: space-around;
+}
+
+.pusher {
+    width: 30%;
+    visibility: hidden;
 }
 
 .content_2_submit {
