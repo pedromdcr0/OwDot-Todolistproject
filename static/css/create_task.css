@@ -1,0 +1,39 @@
+/* Adicione ao seu arquivo de estilo existente */
+
+/* Estilo para botões de prioridade */
+.priority-button {
+    display: inline-block;
+    margin-right: 10px;
+    cursor: pointer;
+    padding: 10px;
+    border: 2px solid #333;
+}
+
+.red-priority {
+    background-color: #FF0000; /* Cor de fundo específica para Vermelho */
+    color: #fff; /* Cor do texto específica para Vermelho */
+}
+
+/* Estilo específico para botão de prioridade Laranja */
+.orange-priority {
+    background-color: #FFA500; /* Cor de fundo específica para Laranja */
+    color: #fff; /* Cor do texto específica para Laranja */
+}
+
+/* Estilo específico para botão de prioridade Amarelo */
+.yellow-priority {
+    background-color: #FFFF00; /* Cor de fundo específica para Amarelo */
+    color: #333; /* Cor do texto específica para Amarelo */
+}
+
+/* Estilo para botões de prioridade quando estão ativos */
+.red_priority.active {
+    background-color: #FF0000; /* Cor de fundo quando ativo */
+    color: #fff; /* Cor do texto quando ativo */
+}
+
+/* Estilo para o texto ao lado do botão de prioridade */
+.button-label {
+    margin-left: 5px;
+}
+

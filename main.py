@@ -10,6 +10,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.root_pat
 db = SQLAlchemy(app)
 app.secret_key = "super-secret-key"
 
+task_tags = db.Table('task_tags', db.Column('task_id', db.Integer, db.ForeignKey('task.id'), primary_key=True), db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True))
+
 
 def verify_complexity(password):
     regex_lower = re.compile(r'[a-z]')
@@ -40,6 +42,20 @@ class User(db.Model):
     username = db.Column(db.String(120), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
+    tasks = db.relationship('Task', backref='user', lazy=True)
+
+
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(255), nullable=False)
+    completed = db.Column(db.Boolean, default=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    tags = db.relationship('Tag', secondary=task_tags, lazy='subquery', backref=db.backref('tasks', lazy=True))
+
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
 
 
 def login_required(f):
@@ -56,6 +72,7 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        conf_password = request.form['conf_password']
         email = request.form['email']
         print(password)
 
@@ -65,7 +82,7 @@ def register():
         if existing_user is not None or not verify_complexity(password) or existing_email is not None:
             return redirect("/register")
 
-        if verify_complexity(password) and not existing_user and not existing_email:
+        if verify_complexity(password) and not existing_user and not existing_email and conf_password == password:
             new_user = User(username=username, email=email, password_hash=generate_password_hash(password, method='pbkdf2:sha256'))
             db.session.add(new_user)
             db.session.commit()
@@ -86,17 +103,38 @@ def login():
 
     user = User.query.filter_by(username=username).first()
 
-    if user and check_password_hash(user.password_hash, password):
+    if user is not None and check_password_hash(user.password_hash, password):
+        print(user.id)
         session['user_id'] = user.id
-        return redirect(f'/tasklist/{username}')
+        session['user'] = user.username
+        print("passou")
+        return redirect(f"/tasklist/{user.username}")
     else:
+        print('nao passou')
         return redirect("/")
 
 
 @app.route("/tasklist/<username>")
 @login_required
 def tasklist(username):
-    return username
+    return render_template("tasklist.html", username=username)
+
+
+@app.route("/create_task/<username>", methods=["GET", "POST"])
+def create_task(username):
+    # description = request.form.get('description')
+    # tags = request.form.get('tags')  # Assuming that tags are provided as a comma-separated string
+    # tag_list = [Tag(name=tag.strip()) for tag in tags.split(',') if tag.strip()]
+    #
+    # new_task = Task(description=description, user=current_user, tags=tag_list)
+    # db.session.add(new_task)
+    # db.session.commit()
+    return render_template('create_task.html', username=username)
+
+
+@app.route("/add_task", methods=["POST"])
+def add_task():
+    return "sasdfg"
 
 
 if __name__ == '__main__':

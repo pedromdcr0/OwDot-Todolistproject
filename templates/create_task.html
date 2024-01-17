@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Task - {{ username }}</title>
+    <link rel="stylesheet" href="../static/css/create_task.css">
+</head>
+<body>
+<form method="POST" action="/add_task">
+        <label class="priority-button red_priority" id="red-priority">
+            <input type="radio" name="priority" value="red">
+            <span class="button-label">Vermelho</span>
+        </label>
+
+        <label class="priority-button orange_priority" id="orange-priority">
+            <input type="radio" name="priority" value="orange">
+            <span class="button-label">Laranja</span>
+        </label>
+
+        <label class="priority-button yellow_priority" id="yellow-priority">
+            <input type="radio" name="priority" value="yellow">
+            <span class="button-label">Amarelo</span>
+        </label>
+
+        <button type="submit">Criar Task</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const priorityButtons = document.querySelectorAll('.priority-button');
+            priorityButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    priorityButtons.forEach(btn => btn.classList.remove('active'));
+
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
