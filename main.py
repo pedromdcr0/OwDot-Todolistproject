@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 import os
 import re
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.root_path, 'models', 'users.db')
@@ -22,8 +23,8 @@ def verify_complexity(password):
 
     regex_symbol = re.compile(r'[!@#$%^&*(),.?":{}|<>]')
 
-    lower = regex_upper.search(password) is not None
-    upper = regex_lower.search(password) is not None
+    upper = regex_upper.search(password) is not None
+    lower = regex_lower.search(password) is not None
     number = regex_number.search(password) is not None
     symbol = regex_symbol.search(password) is not None
     length = len(password) > 8
@@ -48,7 +49,8 @@ class User(db.Model):
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(255), nullable=False)
-    completed = db.Column(db.Boolean, default=False, nullable=False)
+    completed = db.Column(db.String(255), default=False, nullable=False)
+    due_time = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     tags = db.relationship('Tag', secondary=task_tags, lazy='subquery', backref=db.backref('tasks', lazy=True))
 

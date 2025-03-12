@@ -38,6 +38,10 @@ header {
     color: var(--white);
 }
 
+.content_container {
+    margin: 15px 40px;
+}
+
 .content {
     display: flex;
 }
@@ -139,18 +143,13 @@ header {
     transition: background-color 0.5s ease;
     color: var(--white);
     margin: 20px;
-    font-family: var(--primary-font)
-    &:hover {
-        background-color: var(--dark-green);
-        color: gray;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
+    font-family: var(--primary-font);
 }
 
 .content_2_submit:hover {
-    color: gray;
     background-color: var(--dark-green);
-    transition: background-color 0.6s ease, color 0.6s ease;
+    color: gray;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .content_2_forsin_container {
@@ -210,6 +209,59 @@ header {
 
 .footer_title {
     padding: 0;
-    margin-right: 20px;
+    margin: 0px 20px;
+}
+
+.content_buttons_add_task {
+    padding: 10px 20px;
+    font-weight: 400;
+    border-radius: 10px 10px 10px 0;
+    border: none;
+    background-color: var(--light-blue);
+    transition: background-color 0.5s ease;
+    color: var(--white);
+    margin: 20px;
+    font-family: var(--primary-font);
+}
+
+.content_buttons_add_task:hover {
+    background-color: var(--dark-green);
+    color: gray;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modal {
+    color: rgb(0, 0, 0);
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.568);
+    justify-content: center;
+    align-items: center;
+
+}
+.modal_content {
+    background-color: white;
+    width: 400px;
+    height: 350px;
+    margin: 0;
+    border-radius: 10px;
+}
+
+.close_modal {
+    cursor: pointer;
+    text-align: right;
+    margin-right: 15px;
+    margin-top: 6px;
+}
+
+.close_pusher {
+    height: 20px;
+    display: flex;
+    justify-content: right;
 }
 

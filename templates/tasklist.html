@@ -1,20 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>ow dot. - {{ username }}</title>
-    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/tasklist.css">
 </head>
+
 <body>
     <header>
-        <a href="/" class="header_home">Ow Dot</a>
+        <a href="" class="header_home">Ow Dot</a>
         <a href="/" class="header_login">Sign Out</a>
-
     </header>
 
-    <div class="content">
-        <div class="content_buttons">
-            <a href="/create_task/{{ username }}" class="button_create_task">+</a>
+    <div class="content_container">
+        <div class="content">
+            <div class="content_buttons">
+                <button id="openModal_newtask" class="content_buttons_add_task">+ Task</button>
+                <!-- <a href="/create_task/{{ username }}" class="button_create_task">+</a> -->
+            </div>
+
+            <div id="modal_newtask" class="modal_newtask">
+                <div class="modal_content">
+                    <div class="close_pusher">
+                        <span></span>
+                        <span id="close" class="close_modal">&times;</span>
+                    </div>
+                    <h2 class="newitem_title">New task</h2>
+                    <div class="modal_form">
+                        <form id="newTaskForm" method="post" action="">
+                            <div class="new_task_title_container">
+                                <p>Task title:</p>
+                                <input type="text" placeholder="titulo">
+                            </div>
+                            <div class="new_task_description_container">
+                                <input type="text" placeholder="Description">
+                            </div>
+                            <div class="new_task_date_container">
+                                <input type="date" id="duetime">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="content_1">
             <a href="#" class="div_anchor">
@@ -30,5 +59,7 @@
             <p class="footer_title">ow dot.</p>
         </div>
     </footer>
+    <script src="/static/js/script.js"></script>
 </body>
+
 </html>
