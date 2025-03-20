@@ -1,10 +1,10 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, jsonify
 from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 import os
 import re
-from datetime import datetime
+from datetime import datetime, date
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.root_path, 'models', 'users.db')
@@ -27,7 +27,7 @@ def verify_complexity(password):
     lower = regex_lower.search(password) is not None
     number = regex_number.search(password) is not None
     symbol = regex_symbol.search(password) is not None
-    length = len(password) > 8
+    length = len(password) >= 8
 
     return (
         lower and
@@ -49,8 +49,8 @@ class User(db.Model):
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(255), nullable=False)
-    completed = db.Column(db.String(255), default=False, nullable=False)
-    due_time = db.Column(db.DateTime, nullable=False)
+    completed = db.Column(db.Integer, default=False, nullable=False)
+    due_time = db.Column(db.Date, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     tags = db.relationship('Tag', secondary=task_tags, lazy='subquery', backref=db.backref('tasks', lazy=True))
 
@@ -67,6 +67,12 @@ def login_required(f):
             return redirect('/')
         return f(*args, **kwargs)
     return decorated_function
+
+
+def return_id(username):
+    user = User.query.filter_by(username=username).first()
+    user_id = user.id
+    return user_id
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -116,27 +122,49 @@ def login():
         return redirect("/")
 
 
-@app.route("/tasklist/<username>")
+@app.route("/tasklist/<username>", methods=["GET"])
 @login_required
 def tasklist(username):
-    return render_template("tasklist.html", username=username)
+    user_id = return_id(username)
+    tasks = Task.query.filter_by(user_id=user_id).all()
+    return render_template("tasklist.html", username=username, tasks=tasks)
 
 
-@app.route("/create_task/<username>", methods=["GET", "POST"])
+@app.route("/create_task/<username>", methods=["POST"])
 def create_task(username):
-    # description = request.form.get('description')
-    # tags = request.form.get('tags')  # Assuming that tags are provided as a comma-separated string
-    # tag_list = [Tag(name=tag.strip()) for tag in tags.split(',') if tag.strip()]
-    #
-    # new_task = Task(description=description, user=current_user, tags=tag_list)
-    # db.session.add(new_task)
-    # db.session.commit()
-    return render_template('create_task.html', username=username)
+    task_description = request.form.get("task_description")
+    task_date = datetime.strptime(request.form.get("duetime"), "%Y-%m-%d").date()
+
+    user_id = return_id(username)
+
+    existing_task = Task.query.filter_by(description=task_description, due_time=task_date, user_id=user_id).first()
+    if existing_task:
+        return redirect(f"/tasklist/{username}")
+
+    new_task = Task(description=task_description, completed=0, due_time=task_date, user_id=user_id)
+    db.session.add(new_task)
+    db.session.commit()
+
+    return redirect(f"/tasklist/{username}")
 
 
-@app.route("/add_task", methods=["POST"])
-def add_task():
-    return "sasdfg"
+@app.route("/update_status", methods=["POST"])
+@login_required
+def update_status():
+    data = request.get_json()
+    task_id = data.get("task_id")
+    new_status = data.get("status")
+
+    # Busca a tarefa pelo ID
+    task = Task.query.get(task_id)
+    if not task:
+        return jsonify({"error": "Task not found"}), 404
+
+    # Atualiza o status no banco de dados
+    task.completed = new_status
+    db.session.commit()
+
+    return jsonify({"message": "Status atualizado com sucesso!"})
 
 
 if __name__ == '__main__':

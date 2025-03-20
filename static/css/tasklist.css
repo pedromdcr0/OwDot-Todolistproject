@@ -198,6 +198,7 @@ header {
 }
 
 .card_content_description {
+    width: 70%;
     font-weight: 300;
     font-size: 16px;
 }
@@ -275,5 +276,97 @@ header {
     font-weight: 400;
     font-size: 18px;
     text-align: center;
+}
+
+.new_task_title_container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.new_task_title_container_input {
+    margin: 0;
+    padding: 2px;
+    height: 20px;
+}
+
+.new_task_title_container_p {
+    margin: 0;
+}
+
+.new_task_description_container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.new_task_description_container_input {
+    margin: 20px;
+    width: 80%;
+    font-family: var(--primary-font);
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 4px;
+}
+
+.new_task_date_container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.new_task_date_container_title {
+    margin: 0;
+    font-weight: 300;
+}
+
+.new_task_date_container_input {
+    font-family: var(--primary-font);
+    font-weight: 300;
+    font-size: 14px;
 
 }
+
+.new_task_submit_container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.new_task_submit_button {
+    padding: 10px 20px;
+    font-weight: 400;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--light-blue);
+    transition: background-color 0.5s ease;
+    color: var(--white);
+    margin: 20px;
+    font-family: var(--primary-font);
+}
+
+.new_task_submit_button:hover {
+    background-color: var(--dark-green);
+    color: gray;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card_description_date_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.select_dropdown {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: var(--light-green);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    
+}
+

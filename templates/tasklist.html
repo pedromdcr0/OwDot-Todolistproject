@@ -28,31 +28,47 @@
                     </div>
                     <h2 class="newitem_title">New task</h2>
                     <div class="modal_form">
-                        <form id="newTaskForm" method="post" action="">
-                            <div class="new_task_title_container">
-                                <p>Task title:</p>
-                                <input type="text" placeholder="titulo">
-                            </div>
+                        <form action="/create_task/{{ username }}" id="newTaskForm" method="post" action="">
+                            <!--<div class="new_task_title_container">
+                                <p class="new_task_title_container_p">Task title:</p>
+                                <input type="text" placeholder="titulo" class="new_task_title_container_input">
+                            </div> -->
                             <div class="new_task_description_container">
-                                <input type="text" placeholder="Description">
+                                <textarea type="text" placeholder="Description" rows="3"
+                                    class="new_task_description_container_input" id="task_description"
+                                    name="task_description"></textarea>
                             </div>
                             <div class="new_task_date_container">
-                                <input type="date" id="duetime">
+                                <p class="new_task_date_container_title">Deadline:</p>
+                                <input class="new_task_date_container_input" type="date" id="duetime" name="duetime">
+                            </div>
+                            <div class="new_task_submit_container">
+                                <button class="new_task_submit_button">Submit</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
         <div class="content_1">
             <a href="#" class="div_anchor">
+                {% for task in tasks %}
                 <div class="div_clicavel_card">
-                    <p class="card_content_title">a</p>
-                    <p class="card_content_description">b</p>
+                    <div class="card_content_container">
+                        <div class="card_description_date_container">
+                            <p class="card_content_description">{{task.description}}</p>
+                            <p class="card_content_date">{{task.due_time}}</p>
+                            <span class="status_display" data-task-id="{{ task.id }}" onclick="editStatus(this)">
+                                {% if task.completed == 0 %} Open {% elif task.completed == 1 %} Progress {% else %} Finished {% endif %}
+                            </span>
+                        </div>
+                    </div>
+
                 </div>
+                {% endfor %}
             </a>
         </div>
+
     </div>
     <footer class="footer">
         <div>
