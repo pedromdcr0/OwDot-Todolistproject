@@ -17,7 +17,7 @@
         <div class="content">
             <div class="content_buttons">
                 <button id="openModal_newtask" class="content_buttons_add_task">+ Task</button>
-                <!-- <a href="/create_task/{{ username }}" class="button_create_task">+</a> -->
+
             </div>
 
             <div id="modal_newtask" class="modal_newtask">
@@ -29,10 +29,6 @@
                     <h2 class="newitem_title">New task</h2>
                     <div class="modal_form">
                         <form action="/create_task/{{ username }}" id="newTaskForm" method="post" action="">
-                            <!--<div class="new_task_title_container">
-                                <p class="new_task_title_container_p">Task title:</p>
-                                <input type="text" placeholder="titulo" class="new_task_title_container_input">
-                            </div> -->
                             <div class="new_task_description_container">
                                 <textarea type="text" placeholder="Description" rows="3"
                                     class="new_task_description_container_input" id="task_description"
@@ -53,13 +49,19 @@
         <div class="content_1">
             <a href="#" class="div_anchor">
                 {% for task in tasks %}
-                <div class="div_clicavel_card">
+                <div
+                    class="{% if task.completed == 2 %}div_clicavel_card_completed{% else %}div_clicavel_card{% endif %}">
                     <div class="card_content_container">
                         <div class="card_description_date_container">
                             <p class="card_content_description">{{task.description}}</p>
-                            <p class="card_content_date">{{task.due_time}}</p>
+                            <div class="card_content_date">
+                                <p class="{% if task.date_status == 0 %}overdue{% elif task.date_status == 1 %}warning{% else %}safe{% endif %}">o</p>
+                                <p>{{task.due_time}}</p>
+                            </div>
+
                             <span class="status_display" data-task-id="{{ task.id }}" onclick="editStatus(this)">
-                                {% if task.completed == 0 %} Open {% elif task.completed == 1 %} Progress {% else %} Finished {% endif %}
+                                {% if task.completed == 0 %} Open {% elif task.completed == 1 %} On going {% else %}
+                                Finished {% endif %}
                             </span>
                         </div>
                     </div>

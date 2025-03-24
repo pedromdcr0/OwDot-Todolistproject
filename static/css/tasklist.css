@@ -11,6 +11,9 @@
     --light-gray: #FAFAFA;
     --primary-font: 'Quicksand', sans-serif;
     --secondary-font: 'Tajawal', sans-serif;
+    --red-pri: rgb(255, 108, 108);
+    --purple-pri: rgb(219, 148, 255);
+    --green-pri: #D6EADC;
 }
 
 body {
@@ -185,22 +188,116 @@ header {
     padding: 5px 20px 5px 20px;
     border-radius: 10px;
     background-color: var(--light-green);
+    margin-bottom: 5px;
+    align-items: center;
 }
+
 
 .div_clicavel_card:hover {
     background-color: var(--dark-green);
     transition: background-color 0.3s ease;
 }
 
-.card_content_title {
+.div_clicavel_card_completed{
+    padding: 5px 20px 5px 20px;
+    border-radius: 10px;
+    background-color: var(--secondary-background-color);
+
+    margin-bottom: 5px;
+}
+
+.div_clicavel_card_completed .card_content_description {
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+}
+
+.div_clicavel_card_completed .card_content_date {
+    background-color: var(--secondary-background-color);
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+}
+
+.card_content_date {
+    display: flex;
+    justify-content: center;
+    height: 2em;
+    background-color: var(--light-gray);
+    padding: 0.2em 1em 0.2em 1em;
+    align-items: center;
+    border-radius: 10px;
+    display: flex;
+    font-family: var(--primary-font);
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.overdue{
+    margin-right: 10px;
     font-weight: 400;
-    font-size: 18px;
+    color: var(--red-pri);
+}
+
+.warning{
+    margin-right: 10px;
+    font-weight: 400;
+    color: var(--purple-pri);
+}
+
+.safe{
+    margin-right: 10px;
+    font-weight: 400;
+    color: var(--green-pri);
 }
 
 .card_content_description {
-    width: 70%;
+    width: 50%;
+    font-family: var(--primary-font);
     font-weight: 300;
     font-size: 16px;
+}
+
+.status_display {
+    width: 30%;
+    font-family: var(--primary-font);
+    align-items: center;
+    text-align: center;
+    font-weight: 300;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+
+.status_buttons {
+    display: flex;
+    width: 25%;
+    justify-content: space-around;
+    background: #f3f3f3;
+    padding: 5px;
+    border-radius: 10px;
+    
+}
+
+.status_button {
+    font-family: var(--primary-font);
+    font-weight: 300;
+    font-size: 14px;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    background: #ddd;
+    border-radius: 3px;
+    transition: 0.3s;
+
+}
+
+.status_button:hover {
+    background: #bbb;
+}
+
+.status_button_active {
+    background: var(--light-blue);
+    color: white;
 }
 
 .footer {
@@ -354,6 +451,7 @@ header {
 .card_description_date_container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .select_dropdown {
@@ -369,4 +467,6 @@ header {
     outline: none;
     
 }
+
+
 

@@ -21,6 +21,7 @@ openCalendar.addEventListener('focus', function () {
     this.showPicker();
 });
 
+
 function updateTaskStatus(selectElement) {
     let taskId = selectElement.getAttribute("data-task-id");
     let newStatus = selectElement.value;
@@ -37,7 +38,7 @@ function updateTaskStatus(selectElement) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data.message); // Mensagem de sucesso
+            console.log(data.message);
         })
         .catch(error => {
             console.error("Erro ao atualizar status:", error);
@@ -49,24 +50,50 @@ function editStatus(spanElement) {
     let taskId = spanElement.getAttribute("data-task-id");
     let currentStatus = spanElement.innerText.trim();
 
-    let select = document.createElement("select");
-    select.classList.add("select_dropdown")
-    select.innerHTML = `
-        <option class="option_dropdown" value="0" ${currentStatus === "Open" ? "selected" : ""}>Open</option>
-        <option class="option_dropdown" value="1" ${currentStatus === "Progress" ? "selected" : ""}>Progress</option>
-        <option class="option_dropdown" value="2" ${currentStatus === "Finished" ? "selected" : ""}>Finished</option>
-    `;
+    let buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("status_buttons");
 
-    spanElement.replaceWith(select);
+    const statuses = [
+        { value: "0", text: "Open", className: "div_clicavel_card" },
+        { value: "1", text: "On going", className: "div_clicavel_card" },
+        { value: "2", text: "Finished", className: "div_clicavel_card_completed" }
+    ];
 
-    setTimeout(() => {
-        select.focus();
-        select.size = 3;
-    }, 0);
+    statuses.forEach(status => {
+        let button = document.createElement("button");
+        button.innerText = status.text;
+        button.classList.add("status_button");
+        if (status.text === currentStatus) {
+            button.classList.add("status_button_active");
+        }
 
-    select.addEventListener("change", function () {
-        let newStatus = select.value;
+        button.onclick = function () {
+            updateStatus(taskId, status.value, status.text, status.className);
+        };
 
+        buttonContainer.appendChild(button);
+    });
+
+    spanElement.replaceWith(buttonContainer);
+
+    function handleClickOutside(event) {
+        if (!buttonContainer.contains(event.target)) {
+            revertToSpan(currentStatus);
+        }
+    }
+
+    function revertToSpan(text) {
+        let newSpan = document.createElement("span");
+        newSpan.className = "status_display";
+        newSpan.setAttribute("data-task-id", taskId);
+        newSpan.innerText = text;
+        newSpan.onclick = function () { editStatus(newSpan); };
+
+        buttonContainer.replaceWith(newSpan);
+        document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    function updateStatus(taskId, newValue, newText, newClass) {
         fetch("/update_status", {
             method: "POST",
             headers: {
@@ -74,23 +101,26 @@ function editStatus(spanElement) {
             },
             body: JSON.stringify({
                 task_id: taskId,
-                status: newStatus
+                status: newValue
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.message);
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.message);
+            revertToSpan(newText);
 
-                let newSpan = document.createElement("span");
-                newSpan.className = "status_display";
-                newSpan.setAttribute("data-task-id", taskId);
-                newSpan.innerText = select.options[select.selectedIndex].text;
-                newSpan.onclick = function () { editStatus(newSpan); };
+            let taskDiv = document.querySelector(`[data-task-id='${taskId}']`)?.closest(".div_clicavel_card, .div_clicavel_card, .div_clicavel_card_completed");
+            if (taskDiv) {
+                taskDiv.classList.remove("div_clicavel_card", "div_clicavel_card", "div_clicavel_card_completed");
+                void taskDiv.offsetWidth;
 
-                select.replaceWith(newSpan);
-            })
-            .catch(error => {
-                console.error("Erro ao atualizar status:", error);
-            });
-    });
+                taskDiv.classList.add(newClass);
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao atualizar status:", error);
+        });
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
 }

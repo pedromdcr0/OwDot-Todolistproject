@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 import os
 import re
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.root_path, 'models', 'users.db')
@@ -127,6 +127,10 @@ def login():
 def tasklist(username):
     user_id = return_id(username)
     tasks = Task.query.filter_by(user_id=user_id).all()
+
+    for task in tasks:
+        task.date_status = date_status(task.due_time)
+        
     return render_template("tasklist.html", username=username, tasks=tasks)
 
 
@@ -155,17 +159,31 @@ def update_status():
     task_id = data.get("task_id")
     new_status = data.get("status")
 
-    # Busca a tarefa pelo ID
+
     task = Task.query.get(task_id)
+    
     if not task:
         return jsonify({"error": "Task not found"}), 404
 
-    # Atualiza o status no banco de dados
     task.completed = new_status
     db.session.commit()
 
     return jsonify({"message": "Status atualizado com sucesso!"})
 
+def date_status(task_date):
+    if isinstance(task_date, str):
+        date_striped = datetime.strptime(task_date, "%Y/%m/%d").date()
+    else:  
+        date_striped = task_date
+    today = datetime.today().date()
+    print(today)
+    two_days = today + timedelta(days=2)
+    if date_striped <= today:
+        return 0
+    elif today < date_striped <= two_days:
+        return 1
+    else: 
+        return 2
 
 if __name__ == '__main__':
     with app.app_context():

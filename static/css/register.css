@@ -42,6 +42,10 @@ header {
     display: flex;
 }
 
+.content_1_homepager {
+    color: black;
+}
+
 .content_1 {
     width: 65%;
     height: 95vh;
@@ -180,7 +184,7 @@ header {
     transition: background-color 0.5s ease;
     color: var(--white);
     margin: 20px;
-    font-family: var(--primary-font)
+    font-family: var(--primary-font);
     &:hover {
         background-color: var(--dark-green);
         color: gray;
